@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+.pytest_cache/
+__pycache__/
+*$py.class
+
+# Distribution / packaging
+*.egg-info/
+build/
+dist/
+
+# OS generated files
+.idea
+
+# Unit test / coverage reports
+htmlcov/
+.coverage

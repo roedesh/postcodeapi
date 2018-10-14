@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - 'pip install pipenv'
+  - 'pipenv sync'
+  - 'pip install mock pytest pytest-mock pytest-cov coveralls'
+script:
+  - 'pipenv run pytest'
+after_success:
+  - 'coveralls'
