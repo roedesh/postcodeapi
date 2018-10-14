@@ -2,6 +2,10 @@
 
 `postcodeapi` is a tiny Python wrapper around the Postcode API V2.
 
+[![PyPI version](https://badge.fury.io/py/postcodeapi.svg)](https://badge.fury.io/py/postcodeapi)
+[![Build Status](https://travis-ci.org/roedesh/postcodeapi.svg?branch=master)](https://travis-ci.org/roedesh/postcodeapi)
+[![Coverage Status](https://coveralls.io/repos/github/roedesh/postcodeapi/badge.svg?branch=master)](https://coveralls.io/github/roedesh/postcodeapi?branch=master)
+
 ## Installation and usage
 
 ### Installation
