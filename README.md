@@ -4,6 +4,7 @@
 
 [![PyPI version](https://badge.fury.io/py/postcodeapi.svg)](https://badge.fury.io/py/postcodeapi)
 [![Build Status](https://travis-ci.org/roedesh/postcodeapi.svg?branch=master)](https://travis-ci.org/roedesh/postcodeapi)
+[![Requirements Status](https://requires.io/github/roedesh/postcodeapi/requirements.svg?branch=master)](https://requires.io/github/roedesh/postcodeapi/requirements/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/roedesh/postcodeapi/badge.svg?branch=master)](https://coveralls.io/github/roedesh/postcodeapi?branch=master)
 
 ## Installation and usage
