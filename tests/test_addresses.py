@@ -5,6 +5,7 @@ from postcodeapi.exceptions import HouseNumberRequiresPostalCode, InvalidPostalC
 from tests.mock_addresses import (
     mock_address,
     mock_all_addresses,
+    mock_all_addresses_from_postal_code,
     mock_postal_code_missing,
 )
 
@@ -23,8 +24,15 @@ def test_get_address_invalid_postal_code(monkeypatch, api_client):
 
 def test_get_all_addresses(monkeypatch, api_client):
     monkeypatch.setattr(requests, "get", mock_all_addresses)
-    data = api_client.get_all_addresses(postal_code="5038EA")
-    assert data["_embedded"]["addresses"][0]["postcode"] == "5038EA"
+    addresses = api_client.get_all_addresses()
+    assert addresses["next"]
+    assert addresses["entries"][0]["postcode"] == "3815MB"
+
+
+def test_get_all_addresses_from_postal_code(monkeypatch, api_client):
+    monkeypatch.setattr(requests, "get", mock_all_addresses_from_postal_code)
+    addresses = api_client.get_all_addresses(postal_code="5038EA")
+    assert addresses["entries"][0]["postcode"] == "5038EA"
 
 
 def test_get_all_addresses_postal_code_missing(monkeypatch, api_client):

@@ -1,6 +1,6 @@
 class NoAccess(Exception):
     """
-    This exception will be raised when a request is made which is not allowed.
+    This exception will be raised when a unauthorized request is made.
     """
 
     def __init__(self):

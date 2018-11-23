@@ -122,7 +122,7 @@ def mock_address(*args, **kwargs):
     )
 
 
-def mock_all_addresses(*args, **kwargs):
+def mock_all_addresses_from_postal_code(*args, **kwargs):
     """
     This method returns a successful response which contains a collection of addresses.
     """
@@ -200,6 +200,91 @@ def mock_all_addresses(*args, **kwargs):
         "_links": {
             "self": {
                 "href": "https://api.postcodeapi.nu/v2/addresses/?postcode=5038EA"
+            }
+        }
+    }
+    """,
+    )
+
+
+def mock_all_addresses(*args, **kwargs):
+    return MockResponse(
+        status_code=200,
+        text="""
+    {
+        "_embedded": {
+            "addresses": [
+                {
+                    "purpose": "woonfunctie",
+                    "postcode": "3815MB",
+                    "surface": 153,
+                    "municipality": {
+                        "id": "0307",
+                        "label": "Amersfoort"
+                    },
+                    "city": {
+                        "id": "1664",
+                        "label": "Amersfoort"
+                    },
+                    "letter": null,
+                    "geo": {
+                        "center": {
+                            "rd": {
+                                "type": "Point",
+                                "coordinates": [
+                                    156906.51,
+                                    463928.75
+                                ],
+                                "crs": {
+                                    "type": "name",
+                                    "properties": {
+                                        "name": "urn:ogc:def:crs:EPSG::28992"
+                                    }
+                                }
+                            },
+                            "wgs84": {
+                                "type": "Point",
+                                "coordinates": [
+                                    5.4150679,
+                                    52.1635165
+                                ],
+                                "crs": {
+                                    "type": "name",
+                                    "properties": {
+                                        "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "nen5825": {
+                        "postcode": "3815 MB",
+                        "street": "RONHAARSTRAAT"
+                    },
+                    "number": 4,
+                    "addition": null,
+                    "year": 1977,
+                    "province": {
+                        "id": "26",
+                        "label": "Utrecht"
+                    },
+                    "id": "0307200000417271",
+                    "type": "Verblijfsobject",
+                    "street": "Ronhaarstraat",
+                    "_links": {
+                        "self": {
+                            "href": "https://api.postcodeapi.nu/v2/addresses/0307200000417271/"
+                        }
+                    }
+                }
+            ]
+        },
+        "_links": {
+            "self": {
+                "href": "https://api.postcodeapi.nu/v2/addresses/"
+            },
+            "next": {
+                "href": "https://api.postcodeapi.nu/v2/addresses/?from%5Bid%5D=0503200000060096"
             }
         }
     }

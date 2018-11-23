@@ -12,8 +12,9 @@ from tests.mock_postal_codes import (
 
 def test_get_all_postal_codes(monkeypatch, api_client):
     monkeypatch.setattr(requests, "get", mock_all_postal_codes)
-    data = api_client.get_all_postal_codes()
-    assert data["_embedded"]["postcodes"][0]["postcode"] == "7315AA"
+    postal_codes = api_client.get_all_postal_codes()
+    assert postal_codes["next"]
+    assert postal_codes["entries"][0]["postcode"] == "7315AA"
 
 
 def test_get_all_postal_codes_invalid_from_postal_code(monkeypatch, api_client):
@@ -24,8 +25,9 @@ def test_get_all_postal_codes_invalid_from_postal_code(monkeypatch, api_client):
 
 def test_get_all_postal_codes_area(monkeypatch, api_client):
     monkeypatch.setattr(requests, "get", mock_all_postal_codes_area)
-    data = api_client.get_all_postal_codes(area="7313")
-    assert data["_embedded"]["postcodes"][0]["postcode"] == "7513AA"
+    postal_codes = api_client.get_all_postal_codes(area="7313")
+    assert postal_codes["next"]
+    assert postal_codes["entries"][0]["postcode"] == "7513AA"
 
 
 def test_get_postal_code(monkeypatch, api_client):

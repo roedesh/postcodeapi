@@ -1,16 +1,27 @@
 import json
+import urllib
 from urllib.parse import urlencode
 
 import requests
 
 from postcodeapi import exceptions
-from postcodeapi.utils import is_valid_postal_code
+from postcodeapi.utils import is_valid_dutch_postal_code
 
 POSTCODE_API_V2_URL = "https://api.postcodeapi.nu/v2/"
 POSTCODE_API_ALL_ADDRESSES = "addresses"
-POSTCODE_API_ADDRESS = "addresses/{}"
+POSTCODE_API_SINGLE_ADDRESS = "addresses/{}"
 POSTCODE_API_ALL_POSTAL_CODES = "postcodes"
-POSTCODE_API_POSTAL_CODE = "postcodes/{}"
+POSTCODE_API_SINGLE_POSTAL_CODE = "postcodes/{}"
+
+
+def _extract_next_from_postal_code(next_url):
+    decoded_url = urllib.parse.unquote(next_url)
+    return decoded_url.split("&from[postcodeArea]")[0][-6:]
+
+
+def _extract_next_from_address(next_url):
+    decoded_url = urllib.parse.unquote(next_url)
+    return decoded_url.split("?from[id]=")[1]
 
 
 class PostcodeAPIClient:
@@ -65,10 +76,18 @@ class PostcodeAPIClient:
         """
         if number and not postal_code:
             raise exceptions.HouseNumberRequiresPostalCode
-        if postal_code and not is_valid_postal_code(postal_code):
+        if postal_code and not is_valid_dutch_postal_code(postal_code):
             raise exceptions.InvalidPostalCode
         querystring = {"postcode": postal_code, "number": number, "from[id]": from_id}
-        return self._do_request(POSTCODE_API_ALL_ADDRESSES, querystring)
+        data = self._do_request(POSTCODE_API_ALL_ADDRESSES, querystring)
+        entries = data["_embedded"]["addresses"]
+        next_from_address = (
+            _extract_next_from_address(data["_links"]["next"]["href"])
+            if "next" in data["_links"]
+            else ""
+        )
+
+        return {"entries": entries, "next": next_from_address}
 
     def get_address(self, address_id):
         """
@@ -77,8 +96,7 @@ class PostcodeAPIClient:
         :param address_id: ID of the address
         :return: Single address based on ID
         """
-        data = self._do_request(POSTCODE_API_ADDRESS.format(address_id))
-        return data
+        return self._do_request(POSTCODE_API_SINGLE_ADDRESS.format(address_id))
 
     def get_all_postal_codes(self, area=None, from_postal_code=""):
         """
@@ -88,7 +106,7 @@ class PostcodeAPIClient:
         :param from_postal_code: (Optional) The postal code to start from
         :return: List of postal code dictionaries
         """
-        if from_postal_code and not is_valid_postal_code(from_postal_code):
+        if from_postal_code and not is_valid_dutch_postal_code(from_postal_code):
             raise exceptions.InvalidPostalCode
         querystring = {
             "postcodeArea": area,
@@ -97,7 +115,14 @@ class PostcodeAPIClient:
             # So we use the four numbers from the postal code as the area code
             "from[postcodeArea]": from_postal_code[:4],
         }
-        return self._do_request(POSTCODE_API_ALL_POSTAL_CODES, querystring)
+        data = self._do_request(POSTCODE_API_ALL_POSTAL_CODES, querystring)
+        entries = data["_embedded"]["postcodes"]
+        next_from_postal_code = (
+            _extract_next_from_postal_code(data["_links"]["next"]["href"])
+            if "next" in data["_links"]
+            else ""
+        )
+        return {"entries": entries, "next": next_from_postal_code}
 
     def get_postal_code(self, postal_code):
         """
@@ -106,6 +131,6 @@ class PostcodeAPIClient:
         :param postal_code: Postal code to lookup
         :return: Single postal code
         """
-        if not is_valid_postal_code(postal_code):
+        if not is_valid_dutch_postal_code(postal_code):
             raise exceptions.InvalidPostalCode
-        return self._do_request(POSTCODE_API_POSTAL_CODE.format(postal_code))
+        return self._do_request(POSTCODE_API_SINGLE_POSTAL_CODE.format(postal_code))
