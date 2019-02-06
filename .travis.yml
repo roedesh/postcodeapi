@@ -8,6 +8,6 @@ install:
   - 'pipenv sync'
   - 'pip install mock pytest pytest-mock pytest-cov coveralls'
 script:
-  - 'pipenv run pytest'
+  - 'pipenv run pytest --cov=postcodeapi --cov-report html'
 after_success:
   - 'coveralls'
