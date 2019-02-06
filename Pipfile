@@ -8,6 +8,6 @@ requests = "*"
 
 [dev-packages]
 mock = "*"
-pytest = "*"
-pytest-mock = "*"
-pytest-cov = "*"
+pytest = "==4.0.0"
+pytest-mock = "==1.10.0"
+pytest-cov = "==2.6.0"
