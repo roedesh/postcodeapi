@@ -6,7 +6,7 @@ python:
 install:
   - 'pip install pipenv'
   - 'pipenv sync --dev'
-  - 'pip install coveralls pathlib2'
+  - 'pip install coveralls'
 script:
   - 'pipenv run pytest'
 after_success:
