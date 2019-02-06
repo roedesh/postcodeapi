@@ -5,8 +5,7 @@ python:
   - "3.6"
 install:
   - 'pip install pipenv'
-  - 'pipenv sync'
-  - 'pip install mock pytest pytest-mock pytest-cov coveralls'
+  - 'pipenv sync --dev'
 script:
   - 'pipenv run pytest --cov=postcodeapi --cov-report html'
 after_success:
