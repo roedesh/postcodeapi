@@ -1,0 +1,14 @@
+{
+  "_embedded": {
+    "addresses": [
+      {
+        "postcode": "5038EA"
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.postcodeapi.nu/v2/addresses/?postcode=5038EA"
+    }
+  }
+}
