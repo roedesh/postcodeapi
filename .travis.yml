@@ -4,10 +4,10 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - 'pip install pipenv'
-  - 'pipenv sync --dev'
+  - 'pip install pytest'
   - 'pip install coveralls'
+  - 'pip install requests-mock'
 script:
-  - 'pipenv run pytest'
+  - 'pytest'
 after_success:
   - 'coveralls'
