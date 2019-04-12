@@ -1,0 +1,15 @@
+{
+  "_embedded": {
+    "addresses": [
+      {
+        "postcode": "6545CA",
+        "number": 5
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.postcodeapi.nu/v2/addresses/?postcode=6545CA&number=5"
+    }
+  }
+}

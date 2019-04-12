@@ -1,0 +1,17 @@
+{
+  "_embedded": {
+    "postcodes": [
+      {
+        "postcode": "7315AA"
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.postcodeapi.nu/v2/postcodes/"
+    },
+    "next": {
+      "href": "https://api.postcodeapi.nu/v2/postcodes/?from%5Bpostcode%5D=7315BA&from%5BpostcodeArea%5D=7315"
+    }
+  }
+}

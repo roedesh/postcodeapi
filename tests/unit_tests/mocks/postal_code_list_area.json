@@ -1,0 +1,17 @@
+{
+  "_embedded": {
+    "postcodes": [
+      {
+        "postcode": "7513AA"
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.postcodeapi.nu/v2/postcodes/?postcodeArea=7513"
+    },
+    "next": {
+      "href": "https://api.postcodeapi.nu/v2/postcodes/?postcodeArea=7513&from%5Bpostcode%5D=7513BK&from%5BpostcodeArea%5D=7513"
+    }
+  }
+}
