@@ -1,0 +1,17 @@
+{
+  "_embedded": {
+    "addresses": [
+      {
+        "id": "0553200000001332"
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://api.postcodeapi.nu/v2/addresses/?from%5Bid%5D=0503200000060096"
+    },
+    "next": {
+      "href": "https://api.postcodeapi.nu/v2/addresses/?from%5Bid%5D=1672200000009831"
+    }
+  }
+}

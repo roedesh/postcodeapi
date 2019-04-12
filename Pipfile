@@ -7,9 +7,12 @@ name = "pypi"
 requests = "*"
 
 [dev-packages]
-mock = "*"
-pytest = "==4.0.0"
-pytest-mock = "==1.10.0"
-pytest-cov = "==2.6.0"
+pytest = "*"
+pytest-cov = "*"
 "pathlib2" = "*"
 scandir = "*"
+black = "*"
+requests-mock = "*"
+
+[pipenv]
+allow_prereleases = true

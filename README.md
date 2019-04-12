@@ -15,8 +15,8 @@
 
 ### Usage
 
-Here is an example of how to use the API client. First you initialize a client with your API key, after that you use 
-one of the four getter methods to fetch the data you need. They all return the actual JSON response converted to a 
+Here is an example of how to use the API client. First you initialize a client with your API key, after that you use
+one of the four getter methods to fetch the data you need. They all return the actual JSON response converted to a
 Python dictionary.
 
 ```python
@@ -30,15 +30,15 @@ client = PostcodeAPIClient(api_key="YOUR_API_KEY")
 # The postal_code and number parameters are optional
 # The number parameter only works together with postal_code
 data = client.get_all_addresses(postal_code="5038EA", number=19)
-addresses = data["_embedded"]["addresses"] # List of addresses
+addresses = data["results"] # List of addresses
 
 # Fetch a single address
 address = client.get_address(address_id="0855200000046355")
 
-# Fetch a list of postal codes (within a specific area) 
+# Fetch a list of postal codes (within a specific area)
 # The area parameter is optional
 data = client.get_all_postal_codes(area="5038")
-postal_codes = data['_embedded']['postcodes'] # List of postal codes
+postal_codes = data["results"] # List of postal codes
 
 # Fetch a single postal code
 postal_code = client.get_postal_code("5038EA")
@@ -51,5 +51,5 @@ For more information about the data that is returned, please refer to the [offic
 To run the tests, make sure you have the dev dependencies installed, and run `pytest` in the root of the project.
 
 ## Issues
-If you have any issues with the API wrapper, please post them [here](https://github.com/infoklik/postcodeapi/issues). If you have issues with the actual API, 
+If you have any issues with the API wrapper, please post them [here](https://github.com/infoklik/postcodeapi/issues). If you have issues with the actual API,
 please post them in the [official issue tracker](https://github.com/postcodeapi/postcodeapi/issues) of Postcode API.
