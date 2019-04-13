@@ -1,7 +1,8 @@
 postcodeapi
 ===========
 
-``postcodeapi`` is a tiny Python wrapper around the Postcode API V2.
+``postcodeapi`` is an unofficial Python wrapper around the Postcode API
+V2.
 
 |PyPI version| |Build Status| |Requirements Status| |Coverage Status|
 
@@ -34,6 +35,7 @@ response converted to a Python dictionary.
    # The number parameter only works together with postal_code
    data = client.get_all_addresses(postal_code="5038EA", number=19)
    addresses = data["results"] # List of addresses
+   next_id = data["next"] # Next ID to search from (used for pagination)
 
    # Fetch a single address
    address = client.get_address(address_id="0855200000046355")
@@ -42,9 +44,28 @@ response converted to a Python dictionary.
    # The area parameter is optional
    data = client.get_all_postal_codes(area="5038")
    postal_codes = data["results"] # List of postal codes
+   next_postal_code = data["next"] # Next postal code to search from (used for pagination)
 
    # Fetch a single postal code
    postal_code = client.get_postal_code("5038EA")
+
+Exceptions
+~~~~~~~~~~
+
+There are 5 exceptions that can occur:
+
+-  ``NoAccessException``, which occurs when the current account does not
+   have the required privileges to perform the action;
+-  ``ResourceNotFoundException``, which occurs when the returned
+   status_code is 404. Limited to the *get_address* and
+   *get_postal_code* methods;
+-  ``HouseNumberRequiresPostalCodeException``, which occurs when a
+   house_number is given but not a postal_code. Limited to the
+   *get_all_addresses* method;
+-  ``InvalidPostalCodeException``, which occurs when an invalid postal
+   code is given;
+-  ``LimitExceededException``, which occurs when there are too many
+   network requests or the limit has been exceeded
 
 Documentation
 -------------
@@ -55,19 +76,10 @@ the `official API documentation`_. It is written in Dutch.
 Running tests
 -------------
 
-To run the tests, make sure you have the dev dependencies installed, and
-run ``pytest`` in the root of the project.
-
-Issues
-------
-
-If you have any issues with the API wrapper, please post them `here`_.
-If you have issues with the actual API, please post them in the
-`official issue tracker`_ of Postcode API.
+To run the tests, make sure you install the dev dependencies by running
+``pipenv install --dev``, and then run
 
 .. _official API documentation: https://www.postcodeapi.nu/docs/
-.. _here: https://github.com/infoklik/postcodeapi/issues
-.. _official issue tracker: https://github.com/postcodeapi/postcodeapi/issues
 
 .. |PyPI version| image:: https://badge.fury.io/py/postcodeapi.svg
    :target: https://badge.fury.io/py/postcodeapi

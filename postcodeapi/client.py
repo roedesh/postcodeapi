@@ -2,6 +2,7 @@ import json
 from urllib.parse import parse_qs, urlencode, urlparse
 
 import requests
+
 from postcodeapi import exceptions
 from postcodeapi.utils import is_valid_postal_code
 
@@ -35,13 +36,13 @@ def generate_list_result(data, identifier="addresses"):
     if next_url:
         parsed_qs = parse_qs(urlparse(next_url).query)
         if identifier == "addresses":
-            next = parsed_qs.get("from[id]", None)
+            next_val = parsed_qs.get("from[id]", None)
         else:
-            next = parsed_qs.get("from[postcode]", None)
+            next_val = parsed_qs.get("from[postcode]", None)
     else:
-        next = None
+        next_val = None
 
-    return {"results": results, "next": next}
+    return {"results": results, "next": next_val}
 
 
 class PostcodeAPIClient:
@@ -78,9 +79,15 @@ class PostcodeAPIClient:
         )
         data = response.text
         if response.status_code == 403:
-            raise exceptions.NoAccess
+            raise exceptions.NoAccessException(
+                "The current account is not allowed to do this"
+            )
         if response.status_code == 404:
-            raise exceptions.ResourceNotFound
+            raise exceptions.ResourceNotFoundException("Object not found")
+        if response.status_code == 429:
+            raise exceptions.LimitExceededException(
+                "Limit exceeded or too many requests"
+            )
         return json.loads(data)
 
     def get_all_addresses(self, postal_code=None, number=0, from_id=None):
@@ -97,12 +104,16 @@ class PostcodeAPIClient:
 
         if number:
             if not postal_code:
-                raise exceptions.HouseNumberRequiresPostalCode
+                raise exceptions.HouseNumberRequiresPostalCodeException(
+                    "Filtering on a house number requires a postal code"
+                )
             querystring.update({"number": number})
 
         if postal_code:
             if not is_valid_postal_code(postal_code):
-                raise exceptions.InvalidPostalCode
+                raise exceptions.InvalidPostalCodeException(
+                    "postal_code should be a valid Dutch postal code"
+                )
             querystring.update({"postcode": postal_code})
 
         if from_id:
@@ -129,7 +140,9 @@ class PostcodeAPIClient:
         :return: List of postal code dictionaries
         """
         if from_postal_code and not is_valid_postal_code(from_postal_code):
-            raise exceptions.InvalidPostalCode
+            raise exceptions.InvalidPostalCodeException(
+                "from_postal_code should be a valid Dutch postal code"
+            )
 
         querystring = {}
         if area:
@@ -155,5 +168,7 @@ class PostcodeAPIClient:
         :return: Single postal code
         """
         if not is_valid_postal_code(postal_code):
-            raise exceptions.InvalidPostalCode
+            raise exceptions.InvalidPostalCodeException(
+                "postal_code should be a valid Dutch postal code"
+            )
         return self._do_request(POSTCODE_API_POSTAL_CODE.format(postal_code))
