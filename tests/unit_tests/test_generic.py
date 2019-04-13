@@ -1,8 +1,8 @@
 import pytest
 import requests_mock
 
-from postcodeapi.exceptions import (LimitExceededException, NoAccess,
-                                    ResourceNotFound)
+from postcodeapi.exceptions import (LimitExceededException, NoAccessException,
+                                    ResourceNotFoundException)
 from tests.unit_tests.helpers import read_file
 
 
@@ -10,16 +10,16 @@ def test_no_access(api_client):
     with requests_mock.mock() as m:
         m.register_uri(requests_mock.ANY, requests_mock.ANY, status_code=403)
 
-        with pytest.raises(NoAccess):
+        with pytest.raises(NoAccessException):
             api_client.get_all_addresses()
 
-        with pytest.raises(NoAccess):
+        with pytest.raises(NoAccessException):
             api_client.get_address(address_id="ID")
 
-        with pytest.raises(NoAccess):
+        with pytest.raises(NoAccessException):
             api_client.get_all_postal_codes()
 
-        with pytest.raises(NoAccess):
+        with pytest.raises(NoAccessException):
             api_client.get_postal_code(postal_code="7315AD")
 
 
@@ -27,10 +27,10 @@ def test_resource_not_found(api_client):
     with requests_mock.mock() as m:
         m.register_uri(requests_mock.ANY, requests_mock.ANY, status_code=404)
 
-        with pytest.raises(ResourceNotFound):
+        with pytest.raises(ResourceNotFoundException):
             api_client.get_address(address_id="ID")
 
-        with pytest.raises(ResourceNotFound):
+        with pytest.raises(ResourceNotFoundException):
             api_client.get_postal_code(postal_code="7315AD")
 
 

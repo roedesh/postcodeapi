@@ -1,8 +1,8 @@
 import pytest
 import requests_mock
 
-from postcodeapi.exceptions import (HouseNumberRequiresPostalCode,
-                                    InvalidPostalCode)
+from postcodeapi.exceptions import (HouseNumberRequiresPostalCodeException,
+                                    InvalidPostalCodeException)
 from tests.unit_tests.helpers import get_api_url, read_file
 
 
@@ -17,7 +17,7 @@ def test_get_address(api_client):
 
 
 def test_get_address_invalid_postal_code(api_client):
-    with pytest.raises(InvalidPostalCode):
+    with pytest.raises(InvalidPostalCodeException):
         api_client.get_all_addresses(postal_code="AB1234")
 
 
@@ -50,5 +50,5 @@ def test_get_all_addresses_from_id(api_client):
 
 
 def test_get_all_addresses_postal_code_missing(api_client):
-    with pytest.raises(HouseNumberRequiresPostalCode):
+    with pytest.raises(HouseNumberRequiresPostalCodeException):
         api_client.get_all_addresses(number=30)

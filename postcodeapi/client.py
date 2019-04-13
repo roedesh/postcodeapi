@@ -79,9 +79,9 @@ class PostcodeAPIClient:
         )
         data = response.text
         if response.status_code == 403:
-            raise exceptions.NoAccess("The current account is not allowed to do this")
+            raise exceptions.NoAccessException("The current account is not allowed to do this")
         if response.status_code == 404:
-            raise exceptions.ResourceNotFound("Object not found")
+            raise exceptions.ResourceNotFoundException("Object not found")
         if response.status_code == 429:
             raise exceptions.LimitExceededException(
                 "Limit exceeded or too many requests"
@@ -102,14 +102,14 @@ class PostcodeAPIClient:
 
         if number:
             if not postal_code:
-                raise exceptions.HouseNumberRequiresPostalCode(
+                raise exceptions.HouseNumberRequiresPostalCodeException(
                     "Filtering on a house number requires a postal code"
                 )
             querystring.update({"number": number})
 
         if postal_code:
             if not is_valid_postal_code(postal_code):
-                raise exceptions.InvalidPostalCode(
+                raise exceptions.InvalidPostalCodeException(
                     "postal_code should be a valid Dutch postal code"
                 )
             querystring.update({"postcode": postal_code})
@@ -138,7 +138,7 @@ class PostcodeAPIClient:
         :return: List of postal code dictionaries
         """
         if from_postal_code and not is_valid_postal_code(from_postal_code):
-            raise exceptions.InvalidPostalCode(
+            raise exceptions.InvalidPostalCodeException(
                 "from_postal_code should be a valid Dutch postal code"
             )
 
@@ -166,7 +166,7 @@ class PostcodeAPIClient:
         :return: Single postal code
         """
         if not is_valid_postal_code(postal_code):
-            raise exceptions.InvalidPostalCode(
+            raise exceptions.InvalidPostalCodeException(
                 "postal_code should be a valid Dutch postal code"
             )
         return self._do_request(POSTCODE_API_POSTAL_CODE.format(postal_code))

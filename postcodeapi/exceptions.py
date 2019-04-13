@@ -1,16 +1,16 @@
-class NoAccess(Exception):
+class NoAccessException(Exception):
     pass
 
 
-class ResourceNotFound(Exception):
+class ResourceNotFoundException(Exception):
     pass
 
 
-class HouseNumberRequiresPostalCode(Exception):
+class HouseNumberRequiresPostalCodeException(Exception):
     pass
 
 
-class InvalidPostalCode(Exception):
+class InvalidPostalCodeException(Exception):
     pass
 
 
