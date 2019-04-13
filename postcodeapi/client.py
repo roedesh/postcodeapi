@@ -79,7 +79,9 @@ class PostcodeAPIClient:
         )
         data = response.text
         if response.status_code == 403:
-            raise exceptions.NoAccessException("The current account is not allowed to do this")
+            raise exceptions.NoAccessException(
+                "The current account is not allowed to do this"
+            )
         if response.status_code == 404:
             raise exceptions.ResourceNotFoundException("Object not found")
         if response.status_code == 429:

@@ -1,7 +1,8 @@
 import pytest
 import requests_mock
 
-from postcodeapi.exceptions import InvalidPostalCodeException, ResourceNotFoundException
+from postcodeapi.exceptions import (InvalidPostalCodeException,
+                                    ResourceNotFoundException)
 from tests.unit_tests.helpers import get_api_url, read_file
 
 

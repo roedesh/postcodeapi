@@ -3,7 +3,6 @@ import requests_mock
 
 from postcodeapi.exceptions import (LimitExceededException, NoAccessException,
                                     ResourceNotFoundException)
-from tests.unit_tests.helpers import read_file
 
 
 def test_no_access(api_client):
