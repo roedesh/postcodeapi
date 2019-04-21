@@ -34,7 +34,9 @@ def test_get_all_addresses_with_postal_code_and_number(api_client):
             get_api_url("addresses?postcode=6545CA&number=5"),
             text=read_file("address_list_postal_code_and_number.json"),
         )
-        data = api_client.get_all_addresses(postal_code="6545CA", number=5)["results"]
+        data = api_client.get_all_addresses(postal_code="6545CA", number=5)[
+            "results"
+        ]
         assert data[0]["postcode"] == "6545CA"
         assert data[0]["number"] == 5
 
@@ -45,7 +47,9 @@ def test_get_all_addresses_from_id(api_client):
             get_api_url("addresses?from[id]=0503200000060096"),
             text=read_file("address_list_from_id.json"),
         )
-        data = api_client.get_all_addresses(from_id="0503200000060096")["results"]
+        data = api_client.get_all_addresses(from_id="0503200000060096")[
+            "results"
+        ]
         assert data[0]["id"] == "0553200000001332"
 
 

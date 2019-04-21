@@ -62,7 +62,10 @@ class PostcodeAPIClient:
 
         :param api_key: Postcode API V2 key
         """
-        self._headers = {"x-api-key": api_key, "accept": "application/hal+json"}
+        self._headers = {
+            "x-api-key": api_key,
+            "accept": "application/hal+json",
+        }
 
     def _do_request(self, endpoint, querystring=None):
         """

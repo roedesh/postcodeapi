@@ -8,7 +8,9 @@ from tests.unit_tests.helpers import get_api_url, read_file
 
 def test_get_all_postal_codes(api_client):
     with requests_mock.mock() as m:
-        m.get(get_api_url("postcodes"), text=read_file("postal_code_list.json"))
+        m.get(
+            get_api_url("postcodes"), text=read_file("postal_code_list.json")
+        )
         data = api_client.get_all_postal_codes()["results"]
         assert data[0]["postcode"] == "7315AA"
 
@@ -16,10 +18,14 @@ def test_get_all_postal_codes(api_client):
 def test_get_all_postal_codes_from_postal_code(api_client):
     with requests_mock.mock() as m:
         m.get(
-            get_api_url("postcodes?from[postcode]=7315AA&from[postcodeArea]=7315"),
+            get_api_url(
+                "postcodes?from[postcode]=7315AA&from[postcodeArea]=7315"
+            ),
             text=read_file("postal_code_list_from_postal_code.json"),
         )
-        data = api_client.get_all_postal_codes(from_postal_code="7315AA")["results"]
+        data = api_client.get_all_postal_codes(from_postal_code="7315AA")[
+            "results"
+        ]
         assert data[0]["postcode"] == "7315BB"
 
 
@@ -41,7 +47,8 @@ def test_get_all_postal_codes_area(api_client):
 def test_get_postal_code(api_client):
     with requests_mock.mock() as m:
         m.get(
-            get_api_url("postcodes/7315AD"), text=read_file("single_postal_code.json")
+            get_api_url("postcodes/7315AD"),
+            text=read_file("single_postal_code.json"),
         )
         data = api_client.get_postal_code(postal_code="7315AD")
         assert data["postcode"] == "7315AD"
