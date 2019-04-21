@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="postcodeapi",
-    version="1.2.0",
+    version="1.2.1",
     description="An unofficial Python wrapper around the Postcode API v2",
     long_description=open("README.rst").read(),
     url="http://github.com/roedesh/postcodeapi",
